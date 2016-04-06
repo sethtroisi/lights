@@ -55,7 +55,7 @@ def colorSequence():
 
 	colors = [(255,255,255), (255,0,0), (0,255,0), (0,0,255)]
 	for i in range(1000):
-		colors.append(colors[random.randint(0,4)])
+		colors.append(colors[random.randint(0,3)])
 
 #	for i in range(1000):	
 #		colors.append(randomColor())
