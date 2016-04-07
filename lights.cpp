@@ -87,6 +87,11 @@ void setup(void) {
   srand(time(0));
 }
 
+bool oneInXChange(int x) {
+  double random = ((double) rand() / (RAND_MAX));
+  return random * x < 1;
+}
+
  
 int main(void) {
 
@@ -98,7 +103,22 @@ int main(void) {
   const double distPow = 1.1;
   int durationLogDist[distLen] = {};
 
-  for (int round = 0; round < 1114250; round++) {
+  const int numLights = 20;
+  const int updatesPerSecond = 100;
+  const int cycleDelayUS = 1000000 / updatesPerSecond;
+
+  const double secondPerLightChange = 0.4 * (3.0/2.0); // Sometime changes from X to X.
+
+  int majors[numLights] = {};
+  int colors[numLights][3] = {};
+  for (int ci = 0; ci < numLights; ci++) {
+      majors[ci] = rand() % 3;
+      colors[ci][0] = 128;
+      colors[ci][1] = 128;
+      colors[ci][2] = 128;
+  }
+
+  for (int round = 0; round < 600 * updatesPerSecond; round++) {
     if (round % 100 == 0) {
       cout << "round: " << round << endl;
     }
@@ -106,29 +126,31 @@ int main(void) {
     auto begin = chrono::high_resolution_clock::now();
     // RECORD INNER TIMING
 
+    for (int ci = 0; ci < numLights; ci++) {
+      if (oneInXChange(updatesPerSecond * secondPerLightChange)) {
+        majors[ci] = rand() % 3;
+      }
 
-    int colors[100][3] = {};
-    for (int ci = 0; ci < 7; ci++) {
-      colors[ci][0] = 0;
-      colors[ci][1] = 0;
-      colors[ci][2] = 0;
-      colors[ci][0] = round % 256;
-      colors[ci][1] = round % 256;
-      colors[ci][2] = round % 256;
+      colors[ci][0] = max(0, colors[ci][0] - 1);
+      colors[ci][1] = max(0, colors[ci][1] - 1);
+      colors[ci][2] = max(0, colors[ci][2] - 1);
+
+      int m = majors[ci];
+      colors[ci][m] = min(255, colors[ci][m] + 3);;
+
       writeColor(colors[ci]);
     }
 
 
     // END RECORD INNER TIMING
     auto end = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::nanoseconds>(end-begin).count();
+    int durationNS = chrono::duration_cast<chrono::nanoseconds>(end-begin).count();
 
-    int durLog = ceil(log(duration / 1000) / log(distPow));
+    int durLog = ceil(log(durationNS / 1000) / log(distPow));
     //cout << "us total: " << duration / 1000 << " (" << durLog << ")" << endl;
     durationLogDist[durLog] += 1;
 
-    delayMicroseconds(830);
-    delay(10);
+    delayMicroseconds(max(830, cycleDelayUS - durationNS / 1000));
   }
 
   cout << "program finished" << endl;
