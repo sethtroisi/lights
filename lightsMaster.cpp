@@ -7,7 +7,7 @@
 #include <wiringPi.h>
 
 #include "lightsUtil.h"
-
+#include "tracer.h"
 
 using namespace std;
 
@@ -32,6 +32,7 @@ int main(void) {
 
   cout << "Hello to Lights Master!" << endl;
 
+  int status[NUM_LIGHTS][3] = {};
   int colors[NUM_LIGHTS][3] = {};
   for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       colors[ci][0] = 128;
@@ -44,11 +45,10 @@ int main(void) {
       cout << "round: " << round << endl;
     }
 
-    for (int ci = 0; ci < NUM_LIGHTS; ci++) {
-      colors[ci][0] = max(0, colors[ci][0] - 1);
-      colors[ci][1] = max(0, colors[ci][1] - 1);
-      colors[ci][2] = max(0, colors[ci][2] - 1);
+    // TODO WRITE LED SORTER (by value from random init)
+    tracer(round, colors, status, NUM_LIGHTS);
 
+    for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       writeColor(colors[ci]);
     }
 
