@@ -118,7 +118,7 @@ int main(void) {
       colors[ci][2] = 128;
   }
 
-  for (int round = 0; round < 600 * updatesPerSecond; round++) {
+  for (int round = 0; round < 10 * updatesPerSecond; round++) {
     if (round % 100 == 0) {
       cout << "round: " << round << endl;
     }
@@ -144,10 +144,10 @@ int main(void) {
 
     // END RECORD INNER TIMING
     auto end = chrono::high_resolution_clock::now();
-    int durationNS = chrono::duration_cast<chrono::nanoseconds>(end-begin).count();
+    int durationNS = chrono::duration_cast<chrono::microseconds>(end-begin).count();
 
     int durLog = ceil(log(durationNS / 1000) / log(distPow));
-    //cout << "us total: " << duration / 1000 << " (" << durLog << ")" << endl;
+    cout << "us total: " << durationNS / 1000 << " (" << durLog << ")" << endl;
     durationLogDist[durLog] += 1;
 
     delayMicroseconds(max(830, cycleDelayUS - durationNS / 1000));

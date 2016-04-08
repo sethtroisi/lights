@@ -1,13 +1,12 @@
 #include <cassert>
+#include <iostream>
 
 #include <wiringPi.h>
 
+#include "lightsUtil.h"
+
+
 using namespace std;
-
-#define DATA_PORT 9
-#define CLOCK_PORT 8
-
-#define WRITE_DELAY_US 8
 
 void writeBit(bool bit) {
     digitalWrite (DATA_PORT, bit);     // data
@@ -36,9 +35,6 @@ void writeColor(int color[]) {
 }
 
 void setupLights(void) {
-  // Give program higher priority to affect more real timeness.
-  piHiPri(20);
-
   if (wiringPiSetup () == -1) {
     cout << "wiringPiSetup failed" << endl;
     exit;
@@ -47,7 +43,6 @@ void setupLights(void) {
   pinMode (CLOCK_PORT, OUTPUT);
   pinMode (DATA_PORT, OUTPUT);
 
-  srand(time(0));
 }
 
 // DELAY LATCH ~280us = .28ms
