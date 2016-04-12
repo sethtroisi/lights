@@ -42,7 +42,6 @@ void setupLights(void) {
 
   pinMode (CLOCK_PORT, OUTPUT);
   pinMode (DATA_PORT, OUTPUT);
-
 }
 
 // DELAY LATCH ~280us = .28ms

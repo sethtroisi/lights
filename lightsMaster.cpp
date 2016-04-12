@@ -12,7 +12,7 @@
 
 using namespace std;
 
-#define SHOW_TIME_S 10 // Length of show in seconds
+#define SHOW_TIME_S 1000 // Length of show in seconds
 
 #define NUM_LIGHTS 48
 #define UPDATES_PER_SECOND 50
@@ -28,6 +28,9 @@ int main(void) {
 
   // Init random.
   srand(time(0));
+
+  // setup lights (GPIO, ...)
+  setupLights();
 
   cout << "Hello to Lights Master!" << endl;
 
@@ -50,8 +53,6 @@ int main(void) {
 
     // TODO WRITE LED SORTER (by value from random init)
     tracer.iterate(colors);
-
-    cout << "round: " << round << " " << colors[10][1] << endl;
 
     for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       writeColor(colors[ci]);
