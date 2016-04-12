@@ -7,6 +7,7 @@
 #include <wiringPi.h>
 
 #include "lightsUtil.h"
+#include "effect.h"
 #include "tracer.h"
 
 using namespace std;
@@ -22,8 +23,6 @@ using namespace std;
 int main(void) {
   assert(CYCLE_DELAY_US - APPROX_WRITE_DELAY_US > LATCH_TIME_US);
 
-  setupLights();
-
   // Give program higher priority to affect more real timeness.
   piHiPri(20);
 
@@ -32,7 +31,6 @@ int main(void) {
 
   cout << "Hello to Lights Master!" << endl;
 
-  int status[NUM_LIGHTS][3] = {};
   int colors[NUM_LIGHTS][3] = {};
   for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       colors[ci][0] = 128;
@@ -40,13 +38,20 @@ int main(void) {
       colors[ci][2] = 128;
   }
 
+  Tracer tracer;
+  tracer.setNumLights(NUM_LIGHTS);
+  tracer.setupEffect(colors);
+
+
   for (int round = 0; round < UPDATES_PER_SECOND * SHOW_TIME_S; round++) {
     if (round % 100 == 0) {
       cout << "round: " << round << endl;
     }
 
     // TODO WRITE LED SORTER (by value from random init)
-    tracer(round, colors, status, NUM_LIGHTS);
+    tracer.iterate(colors);
+
+    cout << "round: " << round << " " << colors[10][1] << endl;
 
     for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       writeColor(colors[ci]);
