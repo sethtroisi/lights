@@ -11,13 +11,13 @@
 
 using namespace std;
 
+#define SHOW_TIME_S 10 // Length of show in seconds
 
-#define NUM_LIGHTS 47
+#define NUM_LIGHTS 48
 #define UPDATES_PER_SECOND 50
 #define CYCLE_DELAY_US (1000000 / UPDATES_PER_SECOND)
 #define APPROX_WRITE_DELAY_US (NUM_LIGHTS * 24 * WRITE_DELAY_US * 3)
 #define LATCH_TIME_US 800 // ~>280us works but safety margin is good
-
 
 int main(void) {
   assert(CYCLE_DELAY_US - APPROX_WRITE_DELAY_US > LATCH_TIME_US);
@@ -40,7 +40,7 @@ int main(void) {
       colors[ci][2] = 128;
   }
 
-  for (int round = 0; round < 1000; round++) {
+  for (int round = 0; round < UPDATES_PER_SECOND * SHOW_TIME_S; round++) {
     if (round % 100 == 0) {
       cout << "round: " << round << endl;
     }
@@ -53,6 +53,12 @@ int main(void) {
     }
 
     delayMicroseconds(CYCLE_DELAY_US - APPROX_WRITE_DELAY_US);
+  }
+
+  // BLANK LIGHTS AT END.
+  int off[3] = {};
+  for (int ci = 0; ci < NUM_LIGHTS; ci++) {
+    writeColor(off);
   }
 
   return 0;
