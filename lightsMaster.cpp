@@ -8,7 +8,7 @@
 
 #include "lightsUtil.h"
 #include "effect.h"
-#include "tracer.h"
+#include "sorter.h"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ int main(void) {
   assert(CYCLE_DELAY_US - APPROX_WRITE_DELAY_US > LATCH_TIME_US);
 
   // Give program higher priority to affect more real timeness.
-  piHiPri(20);
+  piHiPri(40);
 
   // Init random.
   srand(time(0));
@@ -41,9 +41,9 @@ int main(void) {
       colors[ci][2] = 128;
   }
 
-  Tracer tracer;
-  tracer.setNumLights(NUM_LIGHTS);
-  tracer.setupEffect(colors);
+  Effect* effect = new Sorter();
+  effect->setNumLights(NUM_LIGHTS);
+  effect->setupEffect(colors);
 
 
   for (int round = 0; round < UPDATES_PER_SECOND * SHOW_TIME_S; round++) {
@@ -51,8 +51,7 @@ int main(void) {
       cout << "round: " << round << endl;
     }
 
-    // TODO WRITE LED SORTER (by value from random init)
-    tracer.iterate(colors);
+    effect->iterate(colors);
 
     for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       writeColor(colors[ci]);

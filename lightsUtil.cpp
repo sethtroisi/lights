@@ -1,5 +1,6 @@
 #include <cassert>
 #include <iostream>
+#include <ctime>
 
 #include <wiringPi.h>
 
@@ -10,6 +11,7 @@ using namespace std;
 
 void writeBit(bool bit) {
     digitalWrite (DATA_PORT, bit);     // data
+
     delayMicroseconds(WRITE_DELAY_US);
 
     digitalWrite (CLOCK_PORT, 1);       // CLK up

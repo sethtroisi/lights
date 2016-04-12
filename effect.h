@@ -10,6 +10,9 @@ class Effect
 
   public:
     void setNumLights(int a) { n = a; };
+    int clamp(int a, int min, int max) {
+      return a<min ? min : (a>max ? max: a);
+    }
 
     virtual void setupEffect(int colors[][3])=0;
 
