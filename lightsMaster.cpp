@@ -15,10 +15,10 @@ using namespace std;
 #define SHOW_TIME_S 1000 // Length of show in seconds
 
 #define NUM_LIGHTS 48
-#define UPDATES_PER_SECOND 50
+#define UPDATES_PER_SECOND 75
 #define CYCLE_DELAY_US (1000000 / UPDATES_PER_SECOND)
-#define APPROX_WRITE_DELAY_US (NUM_LIGHTS * 24 * WRITE_DELAY_US * 3)
-#define LATCH_TIME_US 800 // ~>280us works but safety margin is good
+#define APPROX_WRITE_DELAY_US (NUM_LIGHTS * 24 * WRITE_DELAY_US * 2)
+#define LATCH_TIME_US 550 // ~300us works but safety margin is good
 
 int main(void) {
   assert(CYCLE_DELAY_US - APPROX_WRITE_DELAY_US > LATCH_TIME_US);

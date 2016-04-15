@@ -11,19 +11,19 @@ using namespace std;
 
 void writeBit(bool bit) {
     digitalWrite (DATA_PORT, bit);     // data
-
     delayMicroseconds(WRITE_DELAY_US);
 
     digitalWrite (CLOCK_PORT, 1);       // CLK up
     delayMicroseconds(WRITE_DELAY_US);
 
     digitalWrite (CLOCK_PORT, 0);       // CLK down
-    delayMicroseconds(WRITE_DELAY_US);
 }
 
 void writeByte(int num) {
     assert (num >= 0);
     assert (num <= 255);
+
+    // TODO replace this with WiringShift.h when it supports speed.
 
     for (int bit = 128; bit > 0; bit >>= 1) {
         writeBit((num & bit) > 0);
