@@ -37,8 +37,8 @@ void writeColor(int color[]) {
 }
 
 void setupLights(void) {
-  if (wiringPiSetup () == -1) {
-    cout << "wiringPiSetup failed" << endl;
+  if (wiringPiSetupGpio() == -1) {
+    cout << "ERROR: Setup failed" << endl;
     exit;
   }
 

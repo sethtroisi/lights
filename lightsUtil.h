@@ -1,5 +1,5 @@
-#define DATA_PORT 9
-#define CLOCK_PORT 8
+#define DATA_PORT 14
+#define CLOCK_PORT 15
 
 #define WRITE_DELAY_US 5
 
