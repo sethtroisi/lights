@@ -6,7 +6,8 @@ class Effect
   protected:
     int n;
     int iter;
-    int status[100][3];
+    int status[100];
+    int localColor[100][3];
 
   public:
     void setNumLights(int a) { n = a; };

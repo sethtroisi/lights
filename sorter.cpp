@@ -38,7 +38,7 @@ void Sorter::setupEffect(int colors[][3]) {
   int threshold = 10 + deltaPer;
 
   for (int i = 0; i < n; i++) {
-    status[i][0] = i;
+    status[i] = i;
     int goalColor = (2*i) / n;
 
     for (int part = 0; part < 3; part++) {
@@ -77,7 +77,7 @@ void Sorter::iterate(int colors[][3]) {
 
   if (bubbleI < n-1 && bubbleJ < n-1) {
     // cheat and look at status to find "real" order. 
-    if (status[bubbleI][0] < status[bubbleJ][0]) {
+    if (status[bubbleI] < status[bubbleJ]) {
       swapColors(colors, bubbleI, bubbleJ);
     }
   }
@@ -98,10 +98,10 @@ void Sorter::iterate(int colors[][3]) {
 }
 
 void Sorter::swapColors(int colors[][3], int i, int j) {
-//  printf("\tswapping %d (%d) and %d (%d)\n", i, status[i][0], j, status[j][0]);
+//  printf("\tswapping %d (%d) and %d (%d)\n", i, status[i], j, status[j]);
   for (int part = 0; part < 3; part++) {
     swap(colors[i][part], colors[j][part]);
   }
 
-  swap(status[i][0], status[j][0]);
+  swap(status[i], status[j]);
 }

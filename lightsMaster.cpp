@@ -9,6 +9,7 @@
 #include "lightsUtil.h"
 #include "effect.h"
 #include "sorter.h"
+#include "tracer.h"
 
 using namespace std;
 
@@ -41,7 +42,8 @@ int main(void) {
       colors[ci][2] = 128;
   }
 
-  Effect* effect = new Sorter();
+  //Effect* effect = new Sorter();
+  Effect* effect = new Tracer();
   effect->setNumLights(NUM_LIGHTS);
   effect->setupEffect(colors);
 

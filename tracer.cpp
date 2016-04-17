@@ -8,35 +8,44 @@ using namespace std;
 
 void Tracer::setupEffect(int colors[][3]) {
   for (int i = 0; i < n; i++) {
-    status[i][0] = status[i][1] = status[i][2] = 0;
+    status[i] = 0;
+    localColor[i][0] = localColor[i][1] = localColor[i][2] = 0;
   }
-  status[0][1] = 100;
+
+  status[0] = 1;          // copy from localColor?
+  localColor[0][0] = 200; // color to "trace"
 };  
 
 void Tracer::iterate(int colors[][3]) {
   if (oneInX(40)) {
     cout << "\tstarting tracer!" << endl;
 
-    status[0][0] = 255 * oneInX(2);
-    status[0][1] = 255 * oneInX(2);
-    status[0][2] = 255 * oneInX(2);
+    status[0] = 1;
+    localColor[0][0] = 255 * oneInX(2);
+    localColor[0][1] = 255 * oneInX(2);
+    localColor[0][2] = 255 * oneInX(2);
+
+    cout << localColor[0][2] << endl;
   }
 
   for (int ci = n - 1; ci >= 0; ci--) {
+    int s = status[ci];
     for (int part = 0; part < 3; part++) {
-      if (status[ci][part]) {
-        int s = status[ci][part];
+      if (s) {
+        int c = localColor[ci][part];
 
         if (ci+1 < n) {
-          status[ci+1][part] = s;
+          status[ci+1] = s;
+          localColor[ci+1][part] = c;
         }
-        colors[ci][part] = s;
-        status[ci][part] = 0;
+
+        colors[ci][part] = c;
       } else {
         // Dim light behind the Tracer
         colors[ci][part] = max(0, colors[ci][part] - 15);
       }
     }
+    status[ci] = 0;
   }
 // */
 }
