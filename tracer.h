@@ -6,5 +6,9 @@ class Tracer:  public Effect {
     void iterate() override;
 
   private:
+    int cyclesPerIndex;
+    int decayPerCycle;
+    int saveColor[100][3];
+
     bool oneInX(int x);
 };
