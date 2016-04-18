@@ -6,14 +6,26 @@
 
 using namespace std;
 
+
+
+
 void Tracer::setupEffect(int colors[][3]) {
   for (int i = 0; i < n; i++) {
     status[i] = 0;
     localColor[i][0] = localColor[i][1] = localColor[i][2] = 0;
   }
 
-  status[0] = 1;          // copy from localColor?
-  localColor[0][0] = 200; // color to "trace"
+
+  /////////// CONFIG STARTS HERE ///////////
+
+  status[0] = 1;          // Start with an active "Trace"
+  localColor[0][0] = 200; // color to "trace" (RED)
+
+  for (int i = 0; i < n; i++) {
+    setColor(i, 0 /* Red*/, 50 /* Green */, 100 /* Blue */, colors);
+  }
+
+  //////////// CONFIG ENDS HERE ////////////
 };  
 
 void Tracer::iterate(int colors[][3]) {

@@ -15,7 +15,7 @@ using namespace std;
 
 #define SHOW_TIME_S 3600 // Length of show in seconds
 
-#define NUM_LIGHTS 48
+#define NUM_LIGHTS 40
 #define UPDATES_PER_SECOND 75
 #define CYCLE_DELAY_US (1000000 / UPDATES_PER_SECOND)
 #define APPROX_WRITE_DELAY_US (NUM_LIGHTS * 24 * WRITE_DELAY_US * 2)
@@ -42,8 +42,8 @@ int main(void) {
       colors[ci][2] = 128;
   }
 
-  Effect* effect = new Sorter();
-  //Effect* effect = new Tracer();
+  //Effect* effect = new Sorter();
+  Effect* effect = new Tracer();
   effect->setNumLights(NUM_LIGHTS);
   effect->setupEffect(colors);
 
