@@ -6,16 +6,18 @@ class Effect
   public:
     virtual ~Effect() {}
 
-    void setNumLights(int a);
+    void setLights(int a, int colors[][3]);
 
-    virtual void setupEffect(int colors[][3]) = 0;
-    virtual void iterate(int colors[][3]) = 0;
+    virtual void setupEffect() = 0;
+    virtual void iterate() = 0;
 
   protected:
     int n;
     int iter;
     int status[100];
     int localColor[100][3];
+    int colors[100][3];
+    int *c[3];         // Reference to lightMaster's color.
 
     // Helper methods
     int clamp(int a, int min, int max);

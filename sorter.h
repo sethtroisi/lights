@@ -2,8 +2,8 @@
 
 class Sorter:  public Effect {
   public:
-    void setupEffect(int colors[][3]);
-    void iterate(int colors[][3]);
+    void setupEffect();
+    void iterate();
 
   private:
     int bubbleI, bubbleJ;

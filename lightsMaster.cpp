@@ -44,8 +44,8 @@ int main(void) {
 
   //Effect* effect = new Sorter();
   Effect* effect = new Tracer();
-  effect->setNumLights(NUM_LIGHTS);
-  effect->setupEffect(colors);
+  effect->setLights(NUM_LIGHTS, colors);
+  effect->setupEffect();
 
 
   for (int round = 0; round < UPDATES_PER_SECOND * SHOW_TIME_S; round++) {
@@ -53,7 +53,7 @@ int main(void) {
       cout << "round: " << round << endl;
     }
 
-    effect->iterate(colors);
+    effect->iterate();
 
     for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       writeColor(colors[ci]);

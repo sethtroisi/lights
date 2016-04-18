@@ -9,12 +9,11 @@ using namespace std;
 
 
 
-void Tracer::setupEffect(int colors[][3]) {
+void Tracer::setupEffect() {
   for (int i = 0; i < n; i++) {
     status[i] = 0;
-    localColor[i][0] = localColor[i][1] = localColor[i][2] = 0;
+    setColor(i, 0, 0, 0, localColor);
   }
-
 
   /////////// CONFIG STARTS HERE ///////////
 
@@ -28,16 +27,13 @@ void Tracer::setupEffect(int colors[][3]) {
   //////////// CONFIG ENDS HERE ////////////
 };  
 
-void Tracer::iterate(int colors[][3]) {
+void Tracer::iterate() {
   if (oneInX(40)) {
     cout << "\tstarting tracer!" << endl;
 
     status[0] = 1;
-    localColor[0][0] = 255 * oneInX(2);
-    localColor[0][1] = 255 * oneInX(2);
-    localColor[0][2] = 255 * oneInX(2);
 
-    cout << localColor[0][2] << endl;
+    setColor(0, 255 * oneInX(2), 255 * oneInX(2), 255 * oneInX(2), localColor);
   }
 
   for (int ci = n - 1; ci >= 0; ci--) {

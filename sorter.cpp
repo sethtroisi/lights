@@ -14,7 +14,7 @@ int Sorter::randomInt(int a, int b) {
   return a + r * (b - a + 1);
 }
 
-void Sorter::setupEffect(int colors[][3]) {
+void Sorter::setupEffect() {
   // Build random colors and store their "true" sort order in status.
 
   // TODO build colors starting from middle
@@ -64,7 +64,7 @@ void Sorter::setupEffect(int colors[][3]) {
   bubbleJ = 0;
 };  
 
-void Sorter::iterate(int colors[][3]) {
+void Sorter::iterate() {
   iter++;
 
   if (iter < 100) {
@@ -91,7 +91,7 @@ void Sorter::iterate(int colors[][3]) {
     if (bubbleI >= n-1) {
       // wait a while at the end
       if (bubbleI - (n-1) > 100) {
-        setupEffect(colors);
+        setupEffect();
       }
     }
   }

@@ -2,8 +2,8 @@
 
 class Tracer:  public Effect {
   public:
-    void setupEffect(int colors[][3]) override;
-    void iterate(int colors[][3]) override;
+    void setupEffect() override;
+    void iterate() override;
 
   private:
     bool oneInX(int x);
