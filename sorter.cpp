@@ -42,7 +42,7 @@ void Sorter::setupEffect() {
     int goalColor = (2*i) / n;
 
     for (int part = 0; part < 3; part++) {
-      colors[i][part] = curColor[part];
+      (*colors)[i][part] = curColor[part];
 
       int delta = goalColors[goalColor][part] - curColor[part];
       // convert delta to one of {-deltaPer, 0, deltaPer}
@@ -56,7 +56,7 @@ void Sorter::setupEffect() {
   // Randomize the array
   for (int i = 0; i <= n-2; i++) {
     int j = randomInt(0, n - i - 1);
-    swapColors(colors, i, i + j);
+    swapColors(*colors, i, i + j);
   }
 
   iter = 0;
@@ -73,12 +73,12 @@ void Sorter::iterate() {
 
   // for (int i = 0; i < n-1; i++)
   //  for (int j = i; j < n-1; j++)
-  //    maybeSwap(colors, i, j); 
+  //    maybeSwap(*colors, i, j);
 
   if (bubbleI < n-1 && bubbleJ < n-1) {
     // cheat and look at status to find "real" order. 
     if (status[bubbleI] < status[bubbleJ]) {
-      swapColors(colors, bubbleI, bubbleJ);
+      swapColors(*colors, bubbleI, bubbleJ);
     }
   }
 

@@ -1,8 +1,8 @@
 #include "effect.h"
 
-void Effect::setLights(int a, int colorPointer[][3]) {
+void Effect::setLights(int a, int (*colorPointer)[100][3]) {
   n = a;
-  colors = colorPointer[0]
+  colors = colorPointer;
 }
 
 int Effect::clamp(int a, int min, int max) {

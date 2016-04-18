@@ -7,8 +7,6 @@
 using namespace std;
 
 
-
-
 void Tracer::setupEffect() {
   for (int i = 0; i < n; i++) {
     status[i] = 0;
@@ -21,7 +19,7 @@ void Tracer::setupEffect() {
   localColor[0][0] = 200; // color to "trace" (RED)
 
   for (int i = 0; i < n; i++) {
-    setColor(i, 0 /* Red*/, 50 /* Green */, 100 /* Blue */, colors);
+    setColor(i, 0 /* Red*/, 50 /* Green */, 100 /* Blue */, *colors);
   }
 
   //////////// CONFIG ENDS HERE ////////////
@@ -47,15 +45,14 @@ void Tracer::iterate() {
           localColor[ci+1][part] = c;
         }
 
-        colors[ci][part] = c;
+        (*colors)[ci][part] = c;
       } else {
         // Dim light behind the Tracer
-        colors[ci][part] = max(0, colors[ci][part] - 15);
+        (*colors)[ci][part] = max(0, (*colors)[ci][part] - 15);
       }
     }
     status[ci] = 0;
   }
-// */
 }
 
 bool Tracer::oneInX(int x) {

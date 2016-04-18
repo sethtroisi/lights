@@ -35,7 +35,8 @@ int main(void) {
 
   cout << "Hello to Lights Master!" << endl;
 
-  int colors[NUM_LIGHTS][3] = {};
+  assert(NUM_LIGHTS < 100);
+  int colors[100][3] = {};
   for (int ci = 0; ci < NUM_LIGHTS; ci++) {
       colors[ci][0] = 128;
       colors[ci][1] = 128;
@@ -44,7 +45,7 @@ int main(void) {
 
   //Effect* effect = new Sorter();
   Effect* effect = new Tracer();
-  effect->setLights(NUM_LIGHTS, colors);
+  effect->setLights(NUM_LIGHTS, &colors);
   effect->setupEffect();
 
 
