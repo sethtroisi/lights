@@ -8,19 +8,17 @@
 
 using namespace std;
 
+int Sorter::randomFloat() {
+  return (float)rand() / (float)RAND_MAX;
+}
+
 int Sorter::randomInt(int a, int b) {
   // inclusive over [a, b]
   float r = (float)rand() / (float)RAND_MAX;
   return a + r * (b - a + 1);
 }
 
-void Sorter::setupEffect() {
-  // Build random colors and store their "true" sort order in status.
-
-  // TODO build colors starting from middle
-
-  cout << "\tStarting sorter!" << endl;
-
+void Sorter::buildSortColors() {
   int curColor[3] = {
     randomInt(235, 255),
     randomInt(0, 20),
@@ -48,20 +46,38 @@ void Sorter::setupEffect() {
       // convert delta to one of {-deltaPer, 0, deltaPer}
       int shift = deltaPer * ((delta > threshold) - (delta < threshold));
 
-      curColor[part] += shift + randomInt(-10, 10);
+      curColor[part] += shift + randomInt(-20, 20);
       curColor[part] = clamp(curColor[part], 0, 255);
     }
   }
+}
 
-  // Randomize the array
+void Sorter::setupEffect() {
+  // Build random colors and store their "true" sort order in status.
+
+  cout << "\tStarting sorter!" << endl;
+
+  // Build an rainbow of red, blue, green colors (pre sorted) in colors.
+  buildSortColors();
+
+  // Randomize the color's brightness.
+  for (int i = 0; i < n; i++) {
+    float brightness = 0.25 + 0.50 * randomFloat();
+
+    for (int part = 0; part < 3; part++) {
+      (*colors)[i][part] = clamp(brightness * (*colors)[i][part], 0, 255);
+    }
+  }
+
+  // Randomize the color's position.
   for (int i = 0; i <= n-2; i++) {
     int j = randomInt(0, n - i - 1);
     swapColors(*colors, i, i + j);
   }
 
   iter = 0;
-  bubbleI = 0;
-  bubbleJ = 0;
+  indexI = 0;
+  indexJ = 0;
 };  
 
 void Sorter::iterate() {
@@ -71,30 +87,65 @@ void Sorter::iterate() {
     return;
   }
 
+  ///*
+  // Insertion sort
+
+  // for (int i = 1; i < n; i++) {
+  //  int j = i
+  //  while (j > 0 and A[j-1] > A[j]) {
+  //      swapColors(j-1, j);
+  //  }
+  // }
+
+  // Insertion is fairly fast
+  if (iter % 2 != 0) {
+     return;
+  }
+
+  if (indexI >= n-1) {
+    indexI++;
+    // wait a while at the end
+    if (indexI - (n-1) > 100) {
+      setupEffect();
+    }
+  } else {
+    if (indexJ == 0 || (status[indexJ - 1] < status[indexJ])) {
+      indexI++;
+      indexJ = indexI;
+    } else {
+      swapColors(*colors, indexJ - 1, indexJ);
+      indexJ--;
+    }
+  }
+  // */
+
+  /*
+  // Bubble sort
+
   // for (int i = 0; i < n-1; i++)
   //  for (int j = i; j < n-1; j++)
   //    maybeSwap(*colors, i, j);
-
-  if (bubbleI < n-1 && bubbleJ < n-1) {
+  if (indexI < n-1 && indexJ < n-1) {
     // cheat and look at status to find "real" order. 
-    if (status[bubbleI] < status[bubbleJ]) {
-      swapColors(*colors, bubbleI, bubbleJ);
+    if (status[indexI] < status[indexJ]) {
+      swapColors(*colors, indexI, indexJ);
     }
   }
 
-  bubbleJ++;
-  if (bubbleJ >= n-1) {
-    bubbleI++;
-    bubbleJ = bubbleI;
-//    cout << "\tbubbleI: " << bubbleI << endl;
+  indexJ++;
+  if (indexJ >= n-1) {
+    indexI++;
+    indexJ = indexI;
+//    cout << "\tindexI: " << indexI << endl;
 
-    if (bubbleI >= n-1) {
+    if (indexI >= n-1) {
       // wait a while at the end
-      if (bubbleI - (n-1) > 100) {
+      if (indexI - (n-1) > 100) {
         setupEffect();
       }
     }
   }
+  // */
 }
 
 void Sorter::swapColors(int colors[][3], int i, int j) {
