@@ -1,5 +1,3 @@
-#include <algorithm>
-#include <cstdlib>
 #include <iostream>
 
 #include "tracer.h"
@@ -68,8 +66,4 @@ void Tracer::iterate() {
     }
     status[ci] = 0;
   }
-}
-
-bool Tracer::oneInX(int x) {
-  return rand() % x == 0;
 }

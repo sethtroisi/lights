@@ -8,12 +8,13 @@
 
 #include "lightsUtil.h"
 #include "effect.h"
+#include "mood.h"
 #include "sorter.h"
 #include "tracer.h"
 
 using namespace std;
 
-#define SHOW_TIME_S 4 * 3600 // Length of show in seconds
+#define SHOW_TIME_S 2 * 3600 // Length of show in seconds
 
 #define NUM_LIGHTS 42
 #define UPDATES_PER_SECOND 50
@@ -37,13 +38,9 @@ int main(void) {
 
   assert(NUM_LIGHTS < 100);
   int colors[100][3] = {};
-  for (int ci = 0; ci < NUM_LIGHTS; ci++) {
-      colors[ci][0] = 128;
-      colors[ci][1] = 128;
-      colors[ci][2] = 128;
-  }
 
-  Effect* effect = new Sorter();
+  Effect* effect = new Mood();
+  //Effect* effect = new Sorter();
   //Effect* effect = new Tracer();
   effect->setLights(NUM_LIGHTS, &colors);
   effect->setupEffect();

@@ -1,6 +1,6 @@
 #include "effect.h"
 
-class Sorter:  public Effect {
+class Sorter: public Effect {
   public:
     void setupEffect();
     void iterate();
@@ -10,7 +10,4 @@ class Sorter:  public Effect {
 
     void buildSortColors();
     void swapColors(int colors[][3], int i, int j);
-
-    int randomInt(int a, int b);
-    int randomFloat();
 };

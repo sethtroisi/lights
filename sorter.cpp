@@ -8,16 +8,6 @@
 
 using namespace std;
 
-int Sorter::randomFloat() {
-  return (float)rand() / (float)RAND_MAX;
-}
-
-int Sorter::randomInt(int a, int b) {
-  // inclusive over [a, b]
-  float r = (float)rand() / (float)RAND_MAX;
-  return a + r * (b - a + 1);
-}
-
 void Sorter::buildSortColors() {
   int curColor[3] = {
     randomInt(235, 255),
