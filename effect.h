@@ -15,8 +15,9 @@ class Effect
   protected:
     int n;
     int iter;
-    int status[100];
-    int localColor[100][3];
+    int status[100] = {};
+    int localColor[100][3] = {};
+    float floatColor[100][3] = {};
     int (*colors)[100][3];
 
     // Helper methods
@@ -30,6 +31,8 @@ class Effect
     int setColor(int i, int r, int g, int b, int colors[][3]);
 
     int moveTowardsColor(int part, int steps, int colorA[], int colorB[]);
+
+    void setColorsFromFloat(int minPartToShow);
 };
 
 #endif /* EFFECT_H */

@@ -9,8 +9,7 @@ class Mood: public Effect {
     int cyclesPerColor;
 
     float spread;
-    float oddScaler;
-    float movePercent;
+    float effectRate;
     float decayRate;
 
     int goalIndex;

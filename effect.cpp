@@ -40,3 +40,24 @@ int Effect::randomInt(int a, int b) {
   return a + c;
 }
 
+
+void Effect::setColorsFromFloat(int minToShow) {
+  for (int i = 0; i < n; i++) {
+    float maxPart = std::max(std::max(
+        floatColor[i][0],
+        floatColor[i][1]),
+        floatColor[i][2]);
+
+
+    for (int part = 0; part < 3; part++) {
+      float c = floatColor[i][part];
+
+      if (maxPart >= minToShow) {
+        (*colors)[i][part] = clamp(c, 0, 255);
+      } else {
+        (*colors)[i][part] = 0;
+      }
+    }
+  }
+}
+

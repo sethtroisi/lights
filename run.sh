@@ -1,4 +1,4 @@
-delay=1
+delay=0.5
 
 clear && \
    g++ *.cpp -lwiringPi -std=c++11 && \

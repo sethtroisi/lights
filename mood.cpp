@@ -9,31 +9,25 @@ using namespace std;
 void Mood::setupEffect() {
   /////////// CONFIG STARTS HERE ///////////
 
-  cyclesPerColor = 150;
+  cyclesPerColor = 10 * 50;
 
   // These defines how wide an area a new color will effect.
-  oddScaler = 2.0;
-  spread = 2.5;
-  movePercent = 0.01;
+  spread = 4;
 
-  decayRate = 15;
+  effectRate = 0.005;
+  decayRate  = 0.0005;
 
   //////////// CONFIG ENDS HERE ////////////
 
-  goalIndex = (goalIndex + randomInt(n / 4, n / 2)) % n;
+  goalIndex = randomInt(0, n-1);
 
-  // two Colors can be high (> 100)
-  // one Color must be low
-  int lowIndex = randomInt(0, 2);
+  goalColor[0] = randomInt(140,255);
+  goalColor[1] = randomInt(10,40);
+  goalColor[2] = randomInt(0,20);
 
-  for (int part = 0; part < 3; part++) {
-    // Only one color is allowed to cross boundaries
-    int newC = randomInt(155, 255);
-    if (part == lowIndex) {
-      newC = randomInt(0, 20);
-    }
-    goalColor[part] = newC;
-  }
+  // shuffle
+  swap(goalColor[2], goalColor[randomInt(0,2)]);
+  swap(goalColor[1], goalColor[randomInt(0,1)]);
 
   cout << "\theading towards ";
   cout << goalColor[0] << ", " << goalColor[1] << ", " << goalColor[2] << " @ " << goalIndex << endl;
@@ -49,40 +43,28 @@ void Mood::iterate() {
   for (int ci = 0; ci < n; ci++) {
     // chance of update.
     int deltaPos = min(abs(ci - goalIndex), abs(ci - n - goalIndex));
-    float odds = spread * exp((deltaPos * deltaPos) / (2.0 * spread * spread));
+    float positionRate = 1.0/spread * exp(-(deltaPos * deltaPos) / (2.0 * spread * spread));
 
-    if (oneInX(odds / oddScaler)) {
-      for (int part = 0; part < 3; part++) {
-        int c = (*colors)[ci][part];
-        int goal = goalColor[part] * (1.0 - deltaPos / 10);
-        int delta = goal - c;
-        int deltaDir = clamp(delta, -1, 1);
+    for (int part = 0; part < 3; part++) {
+      float c = floatColor[ci][part];
+      int goal = goalColor[part];
+      float delta = goal - c;
 
-        // move slightly towards color;
-        float amount = delta * movePercent;
-//        cout << ci << " " << amount << endl;
-        
-        int intPart = trunc(amount);
-        int remainder = abs(amount - intPart);
+      // move slightly towards color;
+      float amount = delta * positionRate * effectRate;
 
-        (*colors)[ci][part] += intPart;
-        if (oneInX(remainder)) {
-          (*colors)[ci][part] += deltaDir;
-        }         
-      }
+//      cout << ci << " " << positionRate << " | " << part << delta << " " << effectRate << endl;
+
+      floatColor[ci][part] += amount;
     }
 
     // Always be slightly fading towards black
-    if (oneInX(decayRate)) {
-      for (int part = 0; part < 3; part++) {
-        int c = (*colors)[ci][part];
+    for (int part = 0; part < 3; part++) {
+      floatColor[ci][part] *= (1 - decayRate);
 
-        int newC = c * (1 - movePercent);
-        if (c < 2) {
-           newC = 0;
-        }
-        (*colors)[ci][part] = newC;
-      }
+//      cout << ci << " " << part << " " << floatColor[ci][part] << endl;;
     }
   }
+
+  setColorsFromFloat(10);
 }
