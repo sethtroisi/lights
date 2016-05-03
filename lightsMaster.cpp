@@ -11,6 +11,7 @@
 #include "mood.h"
 #include "sorter.h"
 #include "tracer.h"
+#include "twinkle.h"
 
 using namespace std;
 
@@ -39,9 +40,11 @@ int main(void) {
   assert(NUM_LIGHTS < 100);
   int colors[100][3] = {};
 
-  Effect* effect = new Mood();
+  //Effect* effect = new Mood();
   //Effect* effect = new Sorter();
   //Effect* effect = new Tracer();
+  Effect* effect = new Twinkle();
+
   effect->setLights(NUM_LIGHTS, &colors);
   effect->setupEffect();
 
