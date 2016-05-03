@@ -9,13 +9,13 @@ using namespace std;
 void Mood::setupEffect() {
   /////////// CONFIG STARTS HERE ///////////
 
-  cyclesPerColor = 10 * 50;
+  cyclesPerColor = 8 * 50;
 
   // These defines how wide an area a new color will effect.
   spread = 4;
 
   effectRate = 0.005;
-  decayRate  = 0.0005;
+  decayRate  = 0.0001;
 
   //////////// CONFIG ENDS HERE ////////////
 
