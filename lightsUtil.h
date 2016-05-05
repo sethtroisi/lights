@@ -6,6 +6,12 @@
 
 #define WRITE_DELAY_US 5
 
+#define WS2818_T0H_NS 400
+#define WS2818_T0L_NS 850
+
+#define WS2818_T1H_NS 800
+#define WS2818_T1L_NS 450
+
 void writeBit(bool bit);
 void writeByte(int num);
 

@@ -1,7 +1,3 @@
-delay=0.5
-
 clear && \
-   g++ *.cpp -lwiringPi -std=c++11 && \
-   echo "Staring in ${delay}" && \
-   sleep ${delay} && \
+   g++ *.cpp -lwiringPi -std=c++11 -O2 && \
    time sudo ./a.out

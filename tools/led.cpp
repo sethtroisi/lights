@@ -5,14 +5,15 @@
 
 using namespace std;
 
-#define DEFAULT_LED_PORT 26
+#define DEFAULT_LED_PORT 21
 #define BLINK_DELAY_MS 2500
 
 void setup(int port) {
   // Give program higher priority to affect more real timeness.
   piHiPri(4);
 
-  if (wiringPiSetup () == -1) {
+  if (wiringPiSetupGpio() == -1) {
+//  if (wiringPiSetup () == -1) {
     cout << "wiringPiSetup failed" << endl;
     exit;
   }
