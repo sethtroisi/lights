@@ -14,7 +14,7 @@ void Tracer::setupEffect() {
   /////////// CONFIG STARTS HERE ///////////
 
   cyclesPerIndex = 5;
-  decayPerCycle = 4;
+  decayPerCycle = 3;
 
   status[0] = cyclesPerIndex; // Start with an active "Trace"
   localColor[0][0] = 200;     // color to "trace" (RED)

@@ -15,7 +15,7 @@
 
 using namespace std;
 
-#define SHOW_TIME_S 20 // * 3600 // Length of show in seconds
+#define SHOW_TIME_S 48 * 3600 // Length of show in seconds
 
 #define NUM_LIGHTS 42
 #define UPDATES_PER_SECOND 50
@@ -42,8 +42,8 @@ int main(void) {
 
   //Effect* effect = new Mood();
   //Effect* effect = new Sorter();
-  Effect* effect = new Tracer();
-  //Effect* effect = new Twinkle();
+  //Effect* effect = new Tracer();
+  Effect* effect = new Twinkle();
 
   effect->setLights(NUM_LIGHTS, &colors);
   effect->setupEffect();

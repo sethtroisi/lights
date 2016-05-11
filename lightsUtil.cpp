@@ -97,7 +97,7 @@ void delayNano(int ns) {
 
 void writeAndWait(int port, int bit, int ns) {
 //    auto T0 = chrono::high_resolution_clock::now()
-    auto begin = chrono::high_resolution_clock::now();
+//    auto begin = chrono::high_resolution_clock::now();
 
 //    if (bit) {
 //      GPIO_SET = bit * (1 << DATA_PORT);
@@ -107,8 +107,9 @@ void writeAndWait(int port, int bit, int ns) {
 
     digitalWrite(CLOCK_PORT, bit);
 
-    auto end = chrono::high_resolution_clock::now();
-    int durationNS = chrono::duration_cast<chrono::nanoseconds>(end-begin).count();
+//    auto end = chrono::high_resolution_clock::now();
+//    int durationNS = chrono::duration_cast<chrono::nanoseconds>(end-begin).count();
+    int durationNS = 300;
 
 //    auto T1 = chrono::high_resolution_clock::now();
 //    int outer = chrono::duration_cast<chrono::nanoseconds>(T1 - T0).count();
@@ -122,8 +123,8 @@ void writeAndWait(int port, int bit, int ns) {
 
 void writeBit(bool bit) {
     // TODO pass as param or something.
-    bool ws2818 = true;
-    if (1) {
+    bool ws2818 = false;
+    if (ws2818) {
       // One pin writing with timing based data
       writeAndWait(DATA_PORT, 1, bit ? WS2818_T1H_NS : WS2818_T0H_NS);
       writeAndWait(DATA_PORT, 0, bit ? WS2818_T1L_NS : WS2818_T0L_NS);
