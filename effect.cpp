@@ -28,7 +28,7 @@ float Effect::distance3dScaled(int a[3], int b[3]) {
   return 1 - (dist / (3.0 * largest * largest));
 }
 
-int Effect::setColor(int i, int r, int g, int b, int colors[][3]) {
+void Effect::setColor(int i, int r, int g, int b, int colors[][3]) {
   colors[i][0] = r;
   colors[i][1] = g;
   colors[i][2] = b;

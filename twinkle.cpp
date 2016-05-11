@@ -75,6 +75,9 @@ void Twinkle::setupEffect() {
 
   cout << "\ttwinkling towards ";
   cout << goalColorA[0] << ", " << goalColorA[1] << ", " << goalColorA[2] << endl;
+
+  setColor(1, goalColorA[0], goalColorA[1], goalColorA[2], *colors);
+  setColor(2, goalColorB[0], goalColorB[1], goalColorB[2], *colors);
 };  
 
 
@@ -89,7 +92,7 @@ void Twinkle::iterate() {
     iter = 0;
   }
 
-  for (int ci = n - 1; ci >= 0; ci--) {
+  for (int ci = 3; ci < n; ci++) {
     if (randomFloat() < twinklePercent) {
       setRandomColor(ci);
       status[ci] = twinkleRampUp + twinkleRampDown;
