@@ -21,6 +21,8 @@ class Effect
     int (*colors)[100][3];
 
     // Helper methods
+    float distance3dScaled(int a[3], int b[3]);
+
     bool oneInX(int x);
     bool oneInX(float x);
 

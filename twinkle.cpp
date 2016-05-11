@@ -11,14 +11,27 @@ void Twinkle::setGoalColor() {
   goalColorB[1] = goalColorA[1];
   goalColorB[2] = goalColorA[2];
 
-  // Create new Goal Color.
-  goalColorA[0] = randomInt(140,200);
-  goalColorA[1] = randomInt(10,80);
-  goalColorA[2] = randomInt(0,20);
+  while (true) {
+    // Create new Goal Color.
+    goalColorA[0] = randomInt(140,200);
+    goalColorA[1] = randomInt(10,80);
+    goalColorA[2] = randomInt(0,20);
 
-  // shuffle parts of color.
-  swap(goalColorA[2], goalColorA[randomInt(0,2)]);
-  swap(goalColorA[1], goalColorA[randomInt(0,1)]);
+    // shuffle parts of color.
+    swap(goalColorA[2], goalColorA[randomInt(0,2)]);
+    swap(goalColorA[1], goalColorA[randomInt(0,1)]);
+
+    for (int p = 0; p < 3; p++) {
+      cout << "RBG"[p] << " " << goalColorB[p] << " vs " << goalColorA[p] << endl;
+    }
+
+    float d = distance3dScaled(goalColorA, goalColorB);
+    cout << "\t" << d << endl;
+
+    if ((d > .45) || (d > .05 && d < .15) ) {
+      break;
+    }
+  }
 }
 
 
@@ -49,7 +62,7 @@ void Twinkle::setRandomColor(int index) {
 void Twinkle::setupEffect() {
   /////////// CONFIG STARTS HERE ///////////
 
-  cyclesToNewColor = 20 * 50; // Roughly twenty seconds.
+  cyclesToNewColor = 12 * 50; // Roughly twenty seconds.
 
   twinkleRampUp = 15;
   twinkleRampDown = 20;

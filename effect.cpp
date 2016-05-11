@@ -3,14 +3,29 @@
 #include <cstdlib>
 #include "effect.h"
 
+using namespace std;
+
 
 void Effect::setLights(int a, int (*colorPointer)[100][3]) {
   n = a;
   colors = colorPointer;
 }
 
-int Effect::clamp(int a, int min, int max) {
-  return a<min ? min : (a>max ? max: a);
+int Effect::clamp(int a, int minV, int maxV) {
+  return a<minV ? minV : (a>maxV ? maxV: a);
+}
+
+float Effect::distance3dScaled(int a[3], int b[3]) {
+  // TODO use something different later like HSL
+  float dist = 0;
+  int largest = 1;
+  for (int part = 0; part < 3; part++) {
+    int delta = a[part] - b[part];
+    dist += delta * delta;
+    largest = max(max(largest, a[part]), b[part]);
+  }
+
+  return 1 - (dist / (3.0 * largest * largest));
 }
 
 int Effect::setColor(int i, int r, int g, int b, int colors[][3]) {
