@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+
 #include "effect.h"
 
 using namespace std;

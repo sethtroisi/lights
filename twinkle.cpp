@@ -22,11 +22,11 @@ void Twinkle::setGoalColor() {
     swap(goalColorA[1], goalColorA[randomInt(0,1)]);
 
     for (int p = 0; p < 3; p++) {
-      cout << "RBG"[p] << " " << goalColorB[p] << " vs " << goalColorA[p] << endl;
+      cout << "\t" << "RBG"[p] << " " << goalColorB[p] << " vs " << goalColorA[p] << endl;
     }
 
     float d = distance3dScaled(goalColorA, goalColorB);
-    cout << "\t" << d << endl;
+    cout << "\t\t" << d << endl;
 
     if ((d > .45) || (d > .05 && d < .15) ) {
       break;
@@ -73,7 +73,7 @@ void Twinkle::setupEffect() {
 
   setGoalColor();
 
-  cout << "\ttwinkling towards ";
+  cout << "\t\ttwinkling towards ";
   cout << goalColorA[0] << ", " << goalColorA[1] << ", " << goalColorA[2] << endl;
 
   setColor(1, goalColorA[0], goalColorA[1], goalColorA[2], *colors);
