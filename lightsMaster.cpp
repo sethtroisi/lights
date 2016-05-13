@@ -14,7 +14,7 @@ using namespace std;
 #define SHOW_TIME_S 2 * 3600 // Length of show in seconds
 
 #define NUM_LIGHTS 42
-#define UPDATES_PER_SECOND 50
+#define UPDATES_PER_SECOND 100
 #define LATCH_TIME_US 550 // ~300us works but safety margin is good
 
 int main(void) {
@@ -33,7 +33,7 @@ int main(void) {
   // Set up EffectController to deal with everything.
   EffectController controller;
   controller.setupEffectController(
-      10, /*      SHOW_TIME_S,*/
+      SHOW_TIME_S,
       NUM_LIGHTS,
       UPDATES_PER_SECOND,
       LATCH_TIME_US);

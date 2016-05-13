@@ -4,7 +4,7 @@
 #define DATA_PORT 14
 #define CLOCK_PORT 15
 
-#define WRITE_DELAY_US 5
+#define WRITE_DELAY_US 1
 
 #define WS2818_T0H_NS 400
 #define WS2818_T0L_NS 850

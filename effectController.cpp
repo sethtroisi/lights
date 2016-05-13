@@ -32,10 +32,10 @@ void EffectController::run() {
   assert(numLights_ < 100);
   int colors[100][3] = {};
 
-  //Effect* effect = new Mood();
+  Effect* effect = new Mood();
   //Effect* effect = new Sorter();
   //Effect* effect = new Tracer();
-  Effect* effect = new Twinkle();
+  //Effect* effect = new Twinkle();
 
   effect->setLights(numLights_, &colors);
   effect->setupEffect();
