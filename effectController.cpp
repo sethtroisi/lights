@@ -12,6 +12,7 @@
 #include "sorter.h"
 #include "tracer.h"
 #include "twinkle.h"
+#include "rotate.h"
 
 using namespace std;
 
@@ -32,10 +33,11 @@ void EffectController::run() {
   assert(numLights_ < 100);
   int colors[100][3] = {};
 
-  Effect* effect = new Mood();
+  //Effect* effect = new Mood();
   //Effect* effect = new Sorter();
   //Effect* effect = new Tracer();
   //Effect* effect = new Twinkle();
+  Effect* effect = new Rotate();
 
   effect->setLights(numLights_, &colors);
   effect->setupEffect();
