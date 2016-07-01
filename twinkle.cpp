@@ -64,12 +64,12 @@ void Twinkle::setupEffect() {
 
   cyclesToNewColor = 12 * 50; // Roughly twenty seconds.
 
-  twinkleRampUp = 15;
-  twinkleRampDown = 20;
-  twinklePercent = .40;
+  twinkleRampUp = 30;
+  twinkleRampDown = 35;
+  twinklePercent = .13;
 
   //////////// CONFIG ENDS HERE ////////////
-  twinklePercent *= 1.7 * ((twinkleRampUp + twinkleRampDown)) / 50.0 / 50.0;
+  twinklePercent *= 1.4 * ((twinkleRampUp + twinkleRampDown)) / 50.0 / 50.0;
 
   setGoalColor();
 
@@ -94,8 +94,10 @@ void Twinkle::iterate() {
 
   for (int ci = 3; ci < n; ci++) {
     if (randomFloat() < twinklePercent) {
-      setRandomColor(ci);
-      status[ci] = twinkleRampUp + twinkleRampDown;
+      if (status[ci] == 0) {
+        setRandomColor(ci);
+        status[ci] = twinkleRampUp + twinkleRampDown;
+      }
     }
 
     int twinkle = status[ci];
