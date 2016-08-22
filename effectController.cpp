@@ -158,6 +158,7 @@ void EffectController::run() {
   // Never terminates just goes blank when no active show
   while (true) {
     if (!hasNewEffect()) {
+      cout << endl;
       cout << "No effect. Ran for ~" << showTime_ << "s (" << round_ << " rounds)" << endl;
       // BLANK LIGHTS AT END.
       int off[3] = {};

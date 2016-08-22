@@ -33,8 +33,8 @@ void Tracer::iterate() {
 
     status[0] = cyclesPerIndex;
     setColor(0, 255 * oneInX(2), 255 * oneInX(2), 255 * oneInX(2), localColor);
-    cout << "\tstarting tracer: ";
-    cout << localColor[0][0] << "," << localColor[0][1] << "," << localColor[0][2] << endl;
+    //cout << "\tstarting tracer: ";
+    //cout << localColor[0][0] << "," << localColor[0][1] << "," << localColor[0][2] << endl;
   }
 
   for (int ci = n - 1; ci >= 0; ci--) {

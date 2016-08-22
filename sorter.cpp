@@ -44,9 +44,6 @@ void Sorter::buildSortColors() {
 
 void Sorter::setupEffect() {
   // Build random colors and store their "true" sort order in status.
-
-  cout << "\tStarting sorter!" << endl;
-
   // Build an rainbow of red, blue, green colors (pre sorted) in colors.
   buildSortColors();
 
