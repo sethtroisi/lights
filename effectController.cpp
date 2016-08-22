@@ -13,6 +13,7 @@
 
 #include "lightsUtil.h"
 #include "effect.h"
+#include "collide.h"
 #include "mood.h"
 #include "sorter.h"
 #include "tracer.h"
@@ -127,7 +128,7 @@ bool EffectController::loadEffect() {
     cout << "\tLoading random effect" << endl;
 
     // Twinkle is best effect so add it twice.
-    vector<string> fun_effects = {"mood", "rotate", "tracer", "twinkle", "twinkle"};
+    vector<string> fun_effects = {"collide", "mood", "rotate", "tracer", "twinkle", "twinkle"};
  
     effect_name = fun_effects[rand() % fun_effects.size()];
     showTime_ = SHOW_TIME_S;
@@ -147,6 +148,8 @@ bool EffectController::loadEffect() {
     effect_.reset(new Tracer());
   } else if (effect_name == "twinkle") {
     effect_.reset(new Twinkle());
+  } else if (effect_name == "collide") {
+    effect_.reset(new Collide());
   } else {
     cout << "BAD effect_name: " << effect_name << endl;;
   }  
