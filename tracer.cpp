@@ -22,7 +22,7 @@ void Tracer::setupEffect() {
   // Set background colors.
   //  Hint they all look ugly :(
   for (int i = 0; i < n; i++) {
-    setColor(i, 2 /* Red*/, 2 /* Green */, 2 /* Blue */, saveColor);
+    setColor(i, 0 /* Red*/, 1 /* Green */, 1 /* Blue */, saveColor);
   }
 
   //////////// CONFIG ENDS HERE ////////////

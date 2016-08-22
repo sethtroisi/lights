@@ -92,20 +92,29 @@ bool EffectController::loadEffect() {
       ptree pt;
       read_json(ifs, pt);
 
+      cout << "\tlight_file: ";
+
       ptree::const_iterator end = pt.end();
       for (ptree::const_iterator it = pt.begin(); it != end; ++it) {
         string key = it->first;
         string value = it->second.get_value<string>();
 
+        cout << key << ": " << value << ", ";
+
         if (key == "show") {
           effect_name = value;
-          cout << "\tLIGHT_FILE asked for " << value << endl;
+        }
+
+        if (key == "duration") {
+          showTime_ = stoi(value);
         }
 
         if (key != "show" && key != "duration" && key != "parameter") {
-          cout << "\tBAD KEY in LIGHT_FILE key: " << key << " : " << value << endl;
+          cerr << "\tBAD KEY in LIGHT_FILE key: " << key << " : " << value << endl;
         }
       }
+
+      cout << endl;
     }
     catch (std::exception const& e)
     {
@@ -121,6 +130,7 @@ bool EffectController::loadEffect() {
     vector<string> fun_effects = {"mood", "rotate", "tracer", "twinkle", "twinkle"};
  
     effect_name = fun_effects[rand() % fun_effects.size()];
+    showTime_ = SHOW_TIME_S;
     
     // Force a particuraly effect.
     //effect_name = "twinkle";
@@ -131,6 +141,8 @@ bool EffectController::loadEffect() {
     effect_.reset(new Mood());
   } else if (effect_name == "rotate") {
     effect_.reset(new Rotate());
+  } else if (effect_name == "sorter") {
+    effect_.reset(new Sorter());
   } else if (effect_name == "tracer") {
     effect_.reset(new Tracer());
   } else if (effect_name == "twinkle") {
@@ -143,17 +155,25 @@ bool EffectController::loadEffect() {
 void EffectController::run() {
   round_ = 0;
 
-  while (hasNewEffect()) {
+  // Never terminates just goes blank when no active show
+  while (true) {
+    if (!hasNewEffect()) {
+      cout << "No effect. Ran for ~" << showTime_ << "s (" << round_ << " rounds)" << endl;
+      // BLANK LIGHTS AT END.
+      int off[3] = {};
+      for (int ci = 0; ci < numLights_; ci++) {
+        writeColor(off);
+      }
+    }
+
+    while (!hasNewEffect()) {
+      // delay 1s = 1000ms
+      delay(1000); 
+    }
+
     loadEffect();
+    round_ = 0;
     runEffect();
-  }
-
-  cout << "EffectController: No new effect; ending (rounds: " << round_ << ")" << endl;
-
-  // BLANK LIGHTS AT END.
-  int off[3] = {};
-  for (int ci = 0; ci < numLights_; ci++) {
-    writeColor(off);
   }
 }
 
