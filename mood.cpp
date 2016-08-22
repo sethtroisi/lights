@@ -29,8 +29,8 @@ void Mood::setupEffect() {
   swap(goalColor[2], goalColor[randomInt(0,2)]);
   swap(goalColor[1], goalColor[randomInt(0,1)]);
 
-  cout << "\theading towards ";
-  cout << goalColor[0] << ", " << goalColor[1] << ", " << goalColor[2] << " @ " << goalIndex << endl;
+  // cout << "\theading towards ";
+  // cout << goalColor[0] << ", " << goalColor[1] << ", " << goalColor[2] << " @ " << goalIndex << endl;
 };  
 
 void Mood::iterate() {
