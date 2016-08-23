@@ -2,35 +2,57 @@
 
 import logging
 import serial
+import struct
 import time
+import random
 
-LIGHTS = 10
+LIGHTS = 15
 
 MAGIC_HEADER = b'\x03\x05\x08\x0D'
-LIGHT_NUM_HEADER = b'\x00\x00\x00' + chr(LIGHTS).encode('UTF-8')
+LIGHT_NUM_HEADER = struct.pack('>I', 3 * LIGHTS)
 
 def readAndSave():
-  ser = serial.Serial('/dev/ttyACM0', 57600)
+  ser = serial.Serial('/dev/ttyACM0', 9600)
 
-  line = ser.readline().decode('UTF-8').strip()
+  raw_line = ser.readline().strip()
+  print ("Raw: \"{}\"".format(raw_line))
+  line = raw_line.decode('UTF-8').strip()
   print ("Recieved line: \"{}\"".format(line))
-  if "StrandClient" not in line:
+  if "StrandClient" not in line and "ACK" not in line:
     return
 
-  print ("Sending some fake data")
+  iteration = 0
 
-  ser.write(MAGIC_HEADER)
-  ser.write(LIGHT_NUM_HEADER)
-  for i in range(LIGHTS):
-    r = 5 * (i % 3)
-    g = 5 * (i % 5)
-    b = 5 * (i % 10)
-
-    color = (chr(r) + chr(g) + chr(b)).encode('UTF-8')
-    ser.write(color)
-
+  test = time.time()
   while True:
-    line = ser.readline().decode('UTF-8').strip()
+    iteration += 1
+    print (time.time() - test)
+    test = time.time()
+
+    #ser.write(MAGIC_HEADER)
+    #ser.write(LIGHT_NUM_HEADER)
+    for i in range(LIGHTS):
+#      r = 5 * (i % 3)
+#      g = 5 * (i % 5)
+#      b = 5 * (i % 10)
+      r = (iteration % 150) #+ random.randint(0,  50)
+      g = 2 #random.randint(30, 50)
+      b = 2 #random.randint(0,  20)
+
+      color = struct.pack('BBB', r, g, b)
+      assert len(color) == 3
+
+      ser.write(color)
+
+    time.sleep(1)
+
+#    ser.flushInput()
+    while True:
+      line = ser.readline().decode('UTF-8').strip()
+      print ("Debug line: \"{}\"".format(line))
+      if "ACK" in line:
+        break
+
 
 errorCount = 0
 while errorCount < 10:
@@ -42,4 +64,4 @@ while errorCount < 10:
   except Exception as e:
     errorCount += 1
     logging.error("error {}: {}".format(errorCount, e))
-    time.sleep(10)
+    time.sleep(1)
