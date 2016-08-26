@@ -1,3 +1,6 @@
+#ifndef MOOD_H
+#define MOOD_H
+
 #include "effect.h"
 
 class Mood: public Effect {
@@ -15,3 +18,5 @@ class Mood: public Effect {
     int goalIndex;
     int goalColor[3] = {};
 };
+
+#endif /* MOOD_H */

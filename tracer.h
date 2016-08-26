@@ -1,3 +1,6 @@
+#ifndef TRACER_H
+#define TRACER_H
+
 #include "effect.h"
 
 class Tracer: public Effect {
@@ -10,3 +13,5 @@ class Tracer: public Effect {
     int decayPerCycle;
     int saveColor[100][3];
 };
+
+#endif /* TRACER_H */

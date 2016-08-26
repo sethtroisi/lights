@@ -1,3 +1,6 @@
+#ifndef TWINKLE_H
+#define TWINKLE_H
+
 #include "effect.h"
 
 class Twinkle: public Effect {
@@ -20,3 +23,5 @@ class Twinkle: public Effect {
     void setGoalColor();
     void setRandomColor(int index);
 };
+
+#endif /* TWINKLE_H */

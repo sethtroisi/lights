@@ -1,3 +1,6 @@
+#ifndef ROTATE_H
+#define ROTATE_H
+
 #include "effect.h"
 
 class Rotate : public Effect {
@@ -13,3 +16,5 @@ class Rotate : public Effect {
 
     int wheelPos;
 };
+
+#endif /* ROTATE_H */

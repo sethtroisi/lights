@@ -1,3 +1,6 @@
+#ifndef COLLIDE_H
+#define COLLIDE_H
+
 #include "effect.h"
 
 class Collide: public Effect {
@@ -10,3 +13,5 @@ class Collide: public Effect {
     int decayPerCycle;
     int saveColor[100][3];
 };
+
+#endif /* COLLIDE_H */

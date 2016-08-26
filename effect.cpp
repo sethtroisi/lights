@@ -44,7 +44,9 @@ bool Effect::oneInX(float x) {
   return (x < 0.001) || (randomFloat() * x < 1);
 }
 
+
 float Effect::randomFloat() {
+  // 0 to 1
   return (float)rand() / (float)RAND_MAX;
 }
 

@@ -13,6 +13,7 @@
 
 #include "lightsUtil.h"
 #include "effect.h"
+#include "bubble.h"
 #include "collide.h"
 #include "mood.h"
 #include "sorter.h"
@@ -134,11 +135,13 @@ bool EffectController::loadEffect() {
     showTime_ = SHOW_TIME_S;
     
     // Force a particuraly effect.
-    //effect_name = "twinkle";
+    effect_name = "bubble";
   }
 
   cout << "Loading Effect: " << effect_name << endl;
-  if (effect_name == "mood") {
+  if (effect_name == "bubble") {
+    effect_.reset(new Bubble());
+  } else if (effect_name == "mood") {
     effect_.reset(new Mood());
   } else if (effect_name == "rotate") {
     effect_.reset(new Rotate());
