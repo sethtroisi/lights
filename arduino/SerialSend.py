@@ -6,62 +6,66 @@ import struct
 import time
 import random
 
-LIGHTS = 15
+LIGHTS = 45
 
 MAGIC_HEADER = b'\x03\x05\x08\x0D'
 LIGHT_NUM_HEADER = struct.pack('>I', 3 * LIGHTS)
 
-def readAndSave():
-  ser = serial.Serial('/dev/ttyACM0', 9600)
+def test():
+  assert False, "Not tested or written yet"
+  ser = serial.Serial('/dev/ttyUSB0', baudrate = 10000)
 
-  raw_line = ser.readline().strip()
-  print ("Raw: \"{}\"".format(raw_line))
-  line = raw_line.decode('UTF-8').strip()
-  print ("Recieved line: \"{}\"".format(line))
-  if "StrandClient" not in line and "ACK" not in line:
-    return
+  print (ser.readline())
+  ser.write("Hello")
 
-  iteration = 0
+
+
+
+def runIt():
+  #ser = serial.Serial('/dev/ttyACM0', 9600)
+  ser = serial.Serial('/dev/ttyUSB0', baudrate = 9600)
+
+  #raw_line = ser.readline().strip()
+  #print ("Raw: \"{}\"".format(raw_line))
+  #line = raw_line.decode('UTF-8').strip()
+  #print ("Recieved line: \"{}\"".format(line))
+  #if "StrandClient" not in line and "ACK" not in line:
+  #  return
 
   test = time.time()
-  while True:
-    iteration += 1
-    print (time.time() - test)
-    test = time.time()
-
-    #ser.write(MAGIC_HEADER)
-    #ser.write(LIGHT_NUM_HEADER)
+  for iteration in range(25):
     for i in range(LIGHTS):
-#      r = 5 * (i % 3)
-#      g = 5 * (i % 5)
-#      b = 5 * (i % 10)
-      r = (iteration % 150) #+ random.randint(0,  50)
-      g = 2 #random.randint(30, 50)
-      b = 2 #random.randint(0,  20)
+      ser.write(MAGIC_HEADER)
+      ser.write(struct.pack('b', i))
+
+      r = i
+      g = 50 * (iteration % 4)
+      b = 50 * (iteration % 2)
 
       color = struct.pack('BBB', r, g, b)
       assert len(color) == 3
-
       ser.write(color)
 
-    time.sleep(1)
+      if i % 4 == 0:
+        ser.flush()
+        # is time.sleep needed?
+        time.sleep(0.00001)
 
-#    ser.flushInput()
-    while True:
-      line = ser.readline().decode('UTF-8').strip()
-      print ("Debug line: \"{}\"".format(line))
-      if "ACK" in line:
-        break
+    delta = time.time() - test
+    print ("{:.5f} = {} baud".format(delta, LIGHTS * (len(MAGIC_HEADER) + 1 + 3) / delta))
+    test = time.time()
 
 
-errorCount = 0
-while errorCount < 10:
-  try:
-    readAndSave()
-  except KeyboardInterrupt:
-    logging.error('Caught KeyboardInterrupt, exitting')
-    break
-  except Exception as e:
-    errorCount += 1
-    logging.error("error {}: {}".format(errorCount, e))
-    time.sleep(1)
+runIt()
+
+#errorCount = 0
+#while errorCount < 10:
+  #try:
+  #  runIt()
+  #except KeyboardInterrupt:
+  #  logging.error('Caught KeyboardInterrupt, exitting')
+  #  break
+  #except Exception as e:
+  #  errorCount += 1
+  #  logging.error("error {}: {}".format(errorCount, e))
+  #  time.sleep(1)
