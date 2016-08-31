@@ -15,7 +15,7 @@ void Bubble::setupEffect() {
   spread = 4;
 
   effectRate = 0.005;
-  decayRate  = 0.0001;
+  decayRate  = 0.008;
 
   //////////// CONFIG ENDS HERE ////////////
 
@@ -30,11 +30,13 @@ void Bubble::setupEffect() {
     swap(goalColor[1], goalColor[randomInt(0,1)]);
 
     bubble_color[b][0] = goalColor[0];
-    bubble_color[b][0] = goalColor[0];
-    bubble_color[b][0] = goalColor[0];
+    bubble_color[b][1] = goalColor[1];
+    bubble_color[b][2] = goalColor[2];
+
 
     bubble_index[b] = randomInt(0, n);
-    bubble_veloc[b] = 3 * randomFloat() - 1.5;
+    bubble_veloc[b] = .1 * randomFloat() - 0.05;
+    cout << b << "  " << goalColor[0] << ", " << goalColor[1] << " " << goalColor[2] << " @ " << bubble_index[b] << " moving " << bubble_veloc[b] << endl;
   }
 };  
 
@@ -48,7 +50,16 @@ void Bubble::iterate() {
 
   for (int ci = 0; ci < n; ci++) {
     for (int b = 0; b < bubble_count; b++) {
+      bubble_index[b] += bubble_veloc[b];
+      if (bubble_index[b] < n) {
+        bubble_index[b] += n;
+      } else if (bubble_index[b] > n) {
+        bubble_index[b] -= n;
+      }
+
       int goalIndex = bubble_index[b];
+      goalIndex %= n;
+
       int *goalColor = bubble_color[b];
 
       // chance of update.
@@ -67,13 +78,11 @@ void Bubble::iterate() {
 
         floatColor[ci][part] += amount;
       }
-
-      // Always be slightly fading towards black
-      for (int part = 0; part < 3; part++) {
-        floatColor[ci][part] *= (1 - decayRate);
-
-  //      cout << ci << " " << part << " " << floatColor[ci][part] << endl;;
-      }
+    }
+    
+    // Always be slightly fading towards black
+    for (int part = 0; part < 3; part++) {
+      floatColor[ci][part] *= (1 - decayRate);
     }
   }
 

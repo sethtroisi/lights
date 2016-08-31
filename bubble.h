@@ -17,7 +17,7 @@ class Bubble: public Effect {
 
     static const int bubble_count = 10;
     int bubble_color[10][3];
-    int bubble_index[10];
+    float bubble_index[10];
     float bubble_veloc[10];
 };
 
