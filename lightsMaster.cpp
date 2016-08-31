@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define NUM_LIGHTS 40
+#define NUM_LIGHTS 27
 #define UPDATES_PER_SECOND 50
 #define LATCH_TIME_US 550 // ~300us works but safety margin is good
 

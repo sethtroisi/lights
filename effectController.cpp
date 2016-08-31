@@ -15,6 +15,7 @@
 #include "effect.h"
 #include "bubble.h"
 #include "collide.h"
+#include "danger.h"
 #include "mood.h"
 #include "sorter.h"
 #include "tracer.h"
@@ -134,13 +135,18 @@ bool EffectController::loadEffect() {
     effect_name = fun_effects[rand() % fun_effects.size()];
     showTime_ = SHOW_TIME_S;
     
-    // Force a particuraly effect.
-    effect_name = "bubble";
+    // Force a particular effect.
+
+    // Effects under development
+    //effect_name = "bubble";
+    //effect_name = "danger";
   }
 
   cout << "Loading Effect: " << effect_name << endl;
   if (effect_name == "bubble") {
     effect_.reset(new Bubble());
+  } else if (effect_name == "danger") {
+    effect_.reset(new Danger());
   } else if (effect_name == "mood") {
     effect_.reset(new Mood());
   } else if (effect_name == "rotate") {
