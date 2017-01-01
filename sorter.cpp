@@ -52,7 +52,7 @@ void Sorter::setupEffect() {
     float brightness = 0.25 + 0.50 * randomFloat();
 
     for (int part = 0; part < 3; part++) {
-      (*colors)[i][part] = clamp(brightness * (*colors)[i][part], 0, 255);
+      (*colors)[i][part] = clamp((int) brightness * (*colors)[i][part], 0, 255);
     }
   }
 

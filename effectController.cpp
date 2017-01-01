@@ -17,10 +17,11 @@
 #include "collide.h"
 #include "danger.h"
 #include "mood.h"
+#include "rotate.h"
 #include "sorter.h"
+#include "staticColor.h"
 #include "tracer.h"
 #include "twinkle.h"
-#include "rotate.h"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -140,6 +141,7 @@ bool EffectController::loadEffect() {
     // Effects under development
     //effect_name = "bubble";
     //effect_name = "danger";
+    effect_name = "staticcolor";
   }
 
   cout << "Loading Effect: " << effect_name << endl;
@@ -159,6 +161,8 @@ bool EffectController::loadEffect() {
     effect_.reset(new Twinkle());
   } else if (effect_name == "collide") {
     effect_.reset(new Collide());
+  } else if (effect_name == "staticcolor") {
+    effect_.reset(new StaticColor());
   } else {
     cout << "BAD effect_name: " << effect_name << endl;;
   }  

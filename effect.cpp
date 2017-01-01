@@ -13,7 +13,11 @@ void Effect::setLights(int a, int (*colorPointer)[100][3]) {
 }
 
 int Effect::clamp(int a, int minV, int maxV) {
-  return a<minV ? minV : (a>maxV ? maxV: a);
+  return max(min(a, maxV), minV);
+}
+
+float Effect::clamp(float a, float minV, float maxV) {
+  return max(min(a, maxV), minV);
 }
 
 float Effect::distance3dScaled(int a[3], int b[3]) {
@@ -71,7 +75,7 @@ void Effect::setColorsFromFloat(int minToShow) {
       float c = floatColor[i][part];
 
       if (maxPart >= minToShow) {
-        (*colors)[i][part] = clamp(c, 0, 255);
+        (*colors)[i][part] = clamp((int) c, 0, 255);
       } else {
         (*colors)[i][part] = 0;
       }

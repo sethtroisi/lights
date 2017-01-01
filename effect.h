@@ -29,6 +29,7 @@ class Effect
     float randomFloat(); // [0 to 1]
 
     int clamp(int a, int min, int max);
+    float clamp(float a, float min, float max);
     void setColor(int i, int r, int g, int b, int colors[][3]);
 
     int moveTowardsColor(int part, int steps, int colorA[], int colorB[]);
