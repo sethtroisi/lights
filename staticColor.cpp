@@ -35,17 +35,23 @@ void StaticColor::setupEffect() {
   // These defines how the color sparkles.
   deriv = 0.01;
 
-//  if (parameters.find("color") != parameters.end()) {
-//    cout << "\t" << "parameter color: " << p
-//    string color = parameters["color"];
+  if (parameters.find("color") != parameters.end()) {
+    string color = parameters["color"];
+    cout << "\t" << "parameter color: " << color << endl;
 
-//    if (color.size() == 3) {
-//      color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
-//    }
-//    staticColor[0] = readHex(color.substr(0, 2);
-//    staticColor[0] = readHex(color.substr(2, 2);
-//    staticColor[0] = readHex(color.substr(4, 2);
-//  } else { 
+    if (color.front() == '#') {
+      color = color.substr(1);
+    }
+
+    if (color.size() == 3) {
+      color = color.substr(0, 1) + color.substr(0, 1) +
+              color.substr(1, 1) + color.substr(1, 1) +
+              color.substr(2, 1) + color.substr(2, 1);
+    }
+    staticColor[0] = readHex(color.substr(0, 2));
+    staticColor[1] = readHex(color.substr(2, 2));
+    staticColor[2] = readHex(color.substr(4, 2));
+  } else { 
     staticColor[0] = randomInt(140,255);
     staticColor[1] = randomInt(10,40);
     staticColor[2] = randomInt(0,20);
@@ -56,7 +62,7 @@ void StaticColor::setupEffect() {
     cout << "\t" << "random static color: " << staticColor[0] << ", " <<
                                                staticColor[1] << ", " <<
                                                staticColor[2] << endl;
-//  }
+  }
 
   //////////// CONFIG ENDS HERE ////////////
 };  

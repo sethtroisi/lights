@@ -1,5 +1,9 @@
+#include <map>
+
 #ifndef EFFECT_H
 #define EFFECT_H
+
+using namespace std;
 
 class Effect
 {
@@ -7,6 +11,7 @@ class Effect
     virtual ~Effect() {}
 
     void setLights(int a, int (*colors)[100][3]);
+    void setParameters(map<string, string> parameter);
 
     virtual void setupEffect() = 0;
     virtual void iterate() = 0;
@@ -18,6 +23,7 @@ class Effect
     int localColor[100][3] = {};
     float floatColor[100][3] = {};
     int (*colors)[100][3];
+    map<string, string> parameters;
 
     // Helper methods
     float distance3dScaled(int a[3], int b[3]);

@@ -1,11 +1,16 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <map>
+#include <cstring>
 
 #include "effect.h"
 
 using namespace std;
 
+void Effect::setParameters(map<string, string> params) {
+  parameters = params;
+}
 
 void Effect::setLights(int a, int (*colorPointer)[100][3]) {
   n = a;

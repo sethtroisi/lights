@@ -86,6 +86,7 @@ bool EffectController::hasNewEffect() {
 bool EffectController::loadEffect() {
   string effect_name;
 
+  map<string, string> parameters;
   if (wasFileModifiedRecent(LIGHT_FILE, &last_file_update_, &last_file_update_)) {
     try
     {
@@ -107,17 +108,14 @@ bool EffectController::loadEffect() {
 
         if (key == "show") {
           effect_name = value;
-        }
-
-        if (key == "duration") {
+        } else if (key == "duration") {
           showTime_ = stoi(value);
-        }
-
-        if (key != "show" && key != "duration" && key != "parameter") {
-          cerr << "\tBAD KEY in LIGHT_FILE key: " << key << " : " << value << endl;
+        } else if (key == "color") {
+          parameters[key] = value;
+        } else {
+          cerr << "\t\tBAD KEY in LIGHT_FILE key: " << key << " : " << value << endl;
         }
       }
-
       cout << endl;
     }
     catch (std::exception const& e)
@@ -165,7 +163,9 @@ bool EffectController::loadEffect() {
     effect_.reset(new StaticColor());
   } else {
     cout << "BAD effect_name: " << effect_name << endl;;
-  }  
+  }
+  effect_->setParameters(parameters);
+
 }
 
 void EffectController::run() {
